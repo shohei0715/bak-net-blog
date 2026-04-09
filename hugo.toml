@@ -1,4 +1,4 @@
-baseURL = 'https://www.bak-net.com/'
+baseURL = 'https://www.bak-net.com'
 languageCode = 'ja'
 title = 'shohei blog'
 theme = 'PaperMod'
