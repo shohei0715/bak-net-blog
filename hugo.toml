@@ -1,0 +1,30 @@
+baseURL = 'https://www.bak-net.com/'
+languageCode = 'ja'
+title = 'shohei blog'
+theme = 'PaperMod'
+paginate = 10
+
+[params]
+  author = 'Shohei'
+  description = 'shohei blog'
+  showReadingTime = true
+  showShareButtons = false
+  showPostNavLinks = true
+  showBreadCrumbs = true
+  showCodeCopyButtons = true
+  defaultTheme = 'auto'
+
+[params.homeInfoParams]
+  Title = 'shohei blog'
+  Content = ''
+
+[params.profileMode]
+  enabled = false
+
+[markup]
+  [markup.highlight]
+    style = 'monokai'
+    lineNos = false
+
+[outputs]
+  home = ['HTML', 'RSS']
