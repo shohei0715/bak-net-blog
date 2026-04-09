@@ -26,5 +26,9 @@ paginate = 10
     style = 'monokai'
     lineNos = false
 
+[permalinks]
+  [permalinks.page]
+    posts = '/posts/:year/:slug/'
+
 [outputs]
   home = ['HTML', 'RSS']
