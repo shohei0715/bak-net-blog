@@ -5,4 +5,4 @@ draft: true
 slug: "wordpress-yamemashita"
 ---
 
-ここに本文を書く。
+タイトルの通り10年以上使っていたWordPressをやめました。
