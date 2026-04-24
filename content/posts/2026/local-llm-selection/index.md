@@ -5,6 +5,8 @@ draft: false
 slug: "local-llm-selection"
 ---
 
+> **【この記事は生成AIが書いてます】**
+
 社内で運用している OpenClaw（エージェント実行基盤）の既定モデルを何にするか、ここ数日比較していた。環境は RTX 3060 12GB × 2 の合計 **VRAM 24GB**。Ollama 側のチューニングは以下の通り。
 
 ```
