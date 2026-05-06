@@ -1,7 +1,7 @@
 ---
 title: "続・Local LLM 選定 — Qwen3.6 35B-A3B を ncmoe で 64 t/s 出した話"
 date: 2026-05-06T17:37:07+09:00
-draft: true
+draft: false
 slug: "qwen3.6-35b-a3b-working"
 ---
 
