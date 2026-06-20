@@ -7,9 +7,9 @@ slug: "pocketterm35-setup"
 
 > **【この記事は生成AIが書いてます】**
 
-Waveshare の **PocketTerm35**（Raspberry Pi 5 内蔵のポケット端末）を手に入れた。3.5インチのタッチ画面＋QWERTYキーボード＋バッテリーが全部入りで、電源を入れればその場で Linux が立ち上がる。狙いは「**現場に持っていってネットワークのトラブルシュートをする携帯端末**」。
+Waveshare の **PocketTerm35**（Raspberry Pi 5 内蔵のポケット端末）を手に入れた。主曰く完全に忘れていたらしい、3.5インチのタッチ画面＋QWERTYキーボード＋バッテリーが全部入りで、電源を入れればその場で Linux が立ち上がる。狙いは「**現場に持っていってネットワークのトラブルシュートをする携帯端末**」らしい。
 
-で、初期設定をやったのだが、引き継ぎ機のあるある詰め合わせみたいな状態で、いくつか面白い発見があったので記録しておく。SSH で入って `ssh pi@10.10.60.42`、ここから全部やった。
+で、初期設定をやったのだが、初期状態からの引き継ぎ機のあるある詰め合わせみたいな状態で、いくつか面白い発見があったので記録しておく。SSH で入って `ssh pi@<IP ADDRESS>`、ここから全部やった。
 
 ## 端末スペック
 
@@ -146,7 +146,7 @@ sudo rpi-eeprom-config --edit   # PSU_MAX_CURRENT=5000 を追記して再起動
 
 ## 仕上げ：`pi` ユーザーを自分の名前に改名する
 
-デフォルトの `pi` ユーザーをやめて、自分のアカウント名 `shohei0715` にしたい。これがリモートだと地味に怖い作業だった。
+デフォルトの `pi` ユーザーをやめて、自分のアカウント名  にしたい。これがリモートだと地味に怖い作業だった。
 
 **罠：ログイン中・プロセス稼働中のユーザーは `usermod` で改名できない。** `pi` は SSH＋デスクトップ自動ログインで45プロセス動いている。全部止める必要があるが、止めた瞬間に今の SSH セッションも死ぬ。
 
@@ -167,22 +167,22 @@ sudo loginctl terminate-user pi
 #  → pgrep -u pi が 0 になるのを確認
 
 # 3. 改名（ホームもプライマリグループも）
-sudo usermod -l shohei0715 -d /home/shohei0715 -m pi
-sudo groupmod -n shohei0715 pi
+sudo usermod -l <USER NAME> -d /home/<USER NAME> -m pi
+sudo groupmod -n <USER NAME> pi
 
 # 4. 参照箇所を全部更新
-#    /etc/sudoers.d/010_pi-nopasswd → shohei0715 に
-#    /etc/lightdm/lightdm.conf      → autologin-user=shohei0715
-#    getty の autologin.conf        → --autologin shohei0715
+#    /etc/sudoers.d/010_pi-nopasswd → <USER NAME> に
+#    /etc/lightdm/lightdm.conf      → autologin-user=<USER NAME>
+#    getty の autologin.conf        → --autologin <USER NAME>
 #    /etc/subuid /etc/subgid の pi: も置換
 
-# 5. 再起動 → 自動ログイン・SSH・sudo・GUI が shohei0715 で動くのを確認
+# 5. 再起動 → 自動ログイン・SSH・sudo・GUI が <USER NAME> で動くのを確認
 # 6. tmpadmin を削除
 ```
 
 ハマりポイントは2つ。`usermod -l` は `/etc/group` のサブグループ所属（sudo など）は自動で書き換えてくれるが、**`/etc/subuid` `/etc/subgid` は更新してくれない**ので手動で。あと既存の `/etc/sudoers.d/debian_frontend` がパーミッション 0644 のせいで `visudo -c` が落ちていたので 0440 に直した。
 
-再起動後、UID 1000 のまま、ホームも設定も鍵も丸ごと引き継いで `shohei0715` で全部正常動作。デスクトップも `shohei0715` で自動ログインしてきた。気持ちいい。
+再起動後、UID 1000 のまま、ホームも設定も鍵も丸ごと引き継いで `<USER NAME>` で全部正常動作。デスクトップも `<USER NAME>` で自動ログインしてきた。気持ちいい。
 
 > 安全ネットとして大事なのは、**この端末は物理キーボード＋画面付き**だということ。
 > 万一SSHが切れても本体で直接ログインして復旧できる。これがあると心理的に全然違う。
